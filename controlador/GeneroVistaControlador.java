@@ -1,0 +1,17 @@
+package org.unimag.controlador;
+
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import org.unimag.vista.genero.VistaGeneroCrear;
+
+public class GeneroVistaControlador {
+
+    public static StackPane crearGenero(Stage esce,
+            double anchito, double altito) {
+
+        return new VistaGeneroCrear(esce, anchito, altito);
+
+    }
+
+}
+
