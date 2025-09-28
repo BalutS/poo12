@@ -27,8 +27,8 @@ import org.unimag.modelo.Genero;
 import org.unimag.recurso.constante.Configuracion;
 import org.unimag.recurso.utilidad.Marco;
 import org.unimag.recurso.utilidad.Mensaje;
+import org.unimag.servicio.GeneroServicio;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VistaPeliculaCrear extends StackPane {
@@ -131,8 +131,11 @@ public class VistaPeliculaCrear extends StackPane {
         cbmGenero = new ComboBox<>();
         cbmGenero.setMaxWidth(Double.MAX_VALUE);
         cbmGenero.setPrefHeight(ALTO_CAJA);
-        cbmGenero.getItems().addAll(getGenerosDummy());
-        cbmGenero.getSelectionModel().selectFirst();
+        List<Genero> generos = GeneroServicio.obtenerGeneros();
+        cbmGenero.getItems().addAll(generos);
+        if (!generos.isEmpty()) {
+            cbmGenero.getSelectionModel().selectFirst();
+        }
         miGrilla.add(cbmGenero, 1, 5);
 
         Button btnGrabar = new Button("Grabar película");
@@ -143,20 +146,13 @@ public class VistaPeliculaCrear extends StackPane {
         miGrilla.add(btnGrabar, 1, 6);
     }
 
-    private List<Genero> getGenerosDummy() {
-        List<Genero> generos = new ArrayList<>();
-        generos.add(new Genero(1, "Acción", true));
-        generos.add(new Genero(2, "Comedia", true));
-        generos.add(new Genero(3, "Drama", true));
-        generos.add(new Genero(4, "Ciencia Ficción", true));
-        return generos;
-    }
-
     private void limpiarFormulario() {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtProtagonista.setText("");
-        cbmGenero.getSelectionModel().selectFirst();
+        if (!cbmGenero.getItems().isEmpty()) {
+            cbmGenero.getSelectionModel().selectFirst();
+        }
         txtCodigo.requestFocus();
     }
 
@@ -166,10 +162,8 @@ public class VistaPeliculaCrear extends StackPane {
             txtCodigo.requestFocus();
             return false;
         }
-        try {
-            Integer.parseInt(txtCodigo.getText());
-        } catch (NumberFormatException e) {
-            Mensaje.mostrar(Alert.AlertType.WARNING, this.getScene().getWindow(), "Atención", "El código debe ser un número.");
+        if (!txtCodigo.getText().matches("\\d+")) {
+            Mensaje.mostrar(Alert.AlertType.WARNING, this.getScene().getWindow(), "Atención", "El código debe ser un número entero válido.");
             txtCodigo.requestFocus();
             return false;
         }
@@ -194,10 +188,10 @@ public class VistaPeliculaCrear extends StackPane {
     private void guardarLaPelicula() {
         if (formularioCompleto()) {
             PeliculaDto dto = new PeliculaDto();
-            dto.setCodigo(Integer.parseInt(txtCodigo.getText()));
-            dto.setNombre(txtNombre.getText());
-            dto.setProtagonista(txtProtagonista.getText());
-            dto.setGenero(cbmGenero.getValue());
+            dto.setCodigoPelicula(Integer.parseInt(txtCodigo.getText()));
+            dto.setNombrePelicula(txtNombre.getText());
+            dto.setProtagonistaPelicula(txtProtagonista.getText());
+            dto.setGeneroPelicula(cbmGenero.getValue());
 
             if (PeliculaControladorGrabar.crearPelicula(dto)) {
                 Mensaje.mostrar(Alert.AlertType.INFORMATION, null, "Éxito", "La película se ha guardado correctamente.");
