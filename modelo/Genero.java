@@ -40,10 +40,7 @@ public class Genero {
 
     @Override
     public String toString() {
-        return "Genero" 
-                + "idGenero=" + idGenero 
-                + "nombreGenero=" + nombreGenero 
-                + "estadoGenero=" + estadoGenero;
+        return nombreGenero;
     }
     
     

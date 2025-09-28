@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.unimag.controlador.GeneroVistaControlador;
+import org.unimag.controlador.PeliculaVistaControlador;
 import org.unimag.recurso.constante.Configuracion;
 
 public class VistaCabecera extends HBox {
@@ -90,7 +91,12 @@ public class VistaCabecera extends HBox {
         MenuItem opcion4 = new MenuItem("Carrusel pelicula");
 
         opcion1.setOnAction((e) -> {
-            System.out.println("abrir formulario crear pelicula");
+            miPanelPrincipal.setCenter(
+                    PeliculaVistaControlador.crearPelicula(
+                            miEscenario,
+                            Configuracion.ANCHO_APP,
+                            Configuracion.ALTO_CABECERA)
+            );
         });
 
         opcion2.setOnAction((e) -> {
