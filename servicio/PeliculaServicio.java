@@ -17,10 +17,10 @@ public class PeliculaServicio implements ApiOperacionBD<PeliculaDto, Integer> {
     public PeliculaDto insertInto(PeliculaDto dto, String ruta) {
         Pelicula objPelicula = new Pelicula();
 
-        objPelicula.setCodigo(dto.getCodigo());
-        objPelicula.setNombre(dto.getNombre());
-        objPelicula.setProtagonista(dto.getProtagonista());
-        objPelicula.setGenero(dto.getGenero());
+        objPelicula.setCodigoPelicula(dto.getCodigoPelicula());
+        objPelicula.setNombrePelicula(dto.getNombrePelicula());
+        objPelicula.setProtagonistaPelicula(dto.getProtagonistaPelicula());
+        objPelicula.setGeneroPelicula(dto.getGeneroPelicula());
 
         System.out.println(objPelicula);
         return dto;

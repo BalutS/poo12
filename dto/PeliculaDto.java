@@ -3,50 +3,50 @@ package org.unimag.dto;
 import org.unimag.modelo.Genero;
 
 public class PeliculaDto {
-    private Integer codigo;
-    private String nombre;
-    private String protagonista;
-    private Genero genero;
+    private Integer codigoPelicula;
+    private String nombrePelicula;
+    private String protagonistaPelicula;
+    private Genero generoPelicula;
 
     public PeliculaDto() {
     }
 
-    public PeliculaDto(Integer codigo, String nombre, String protagonista, Genero genero) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.protagonista = protagonista;
-        this.genero = genero;
+    public PeliculaDto(Integer codigoPelicula, String nombrePelicula, String protagonistaPelicula, Genero generoPelicula) {
+        this.codigoPelicula = codigoPelicula;
+        this.nombrePelicula = nombrePelicula;
+        this.protagonistaPelicula = protagonistaPelicula;
+        this.generoPelicula = generoPelicula;
     }
 
-    public Integer getCodigo() {
-        return codigo;
+    public Integer getCodigoPelicula() {
+        return codigoPelicula;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setCodigoPelicula(Integer codigoPelicula) {
+        this.codigoPelicula = codigoPelicula;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombrePelicula() {
+        return nombrePelicula;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombrePelicula(String nombrePelicula) {
+        this.nombrePelicula = nombrePelicula;
     }
 
-    public String getProtagonista() {
-        return protagonista;
+    public String getProtagonistaPelicula() {
+        return protagonistaPelicula;
     }
 
-    public void setProtagonista(String protagonista) {
-        this.protagonista = protagonista;
+    public void setProtagonistaPelicula(String protagonistaPelicula) {
+        this.protagonistaPelicula = protagonistaPelicula;
     }
 
-    public Genero getGenero() {
-        return genero;
+    public Genero getGeneroPelicula() {
+        return generoPelicula;
     }
 
-    public void setGenero(Genero genero) {
-        this.genero = genero;
+    public void setGeneroPelicula(Genero generoPelicula) {
+        this.generoPelicula = generoPelicula;
     }
 }

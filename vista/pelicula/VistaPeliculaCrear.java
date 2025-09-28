@@ -194,10 +194,10 @@ public class VistaPeliculaCrear extends StackPane {
     private void guardarLaPelicula() {
         if (formularioCompleto()) {
             PeliculaDto dto = new PeliculaDto();
-            dto.setCodigo(Integer.parseInt(txtCodigo.getText()));
-            dto.setNombre(txtNombre.getText());
-            dto.setProtagonista(txtProtagonista.getText());
-            dto.setGenero(cbmGenero.getValue());
+            dto.setCodigoPelicula(Integer.parseInt(txtCodigo.getText()));
+            dto.setNombrePelicula(txtNombre.getText());
+            dto.setProtagonistaPelicula(txtProtagonista.getText());
+            dto.setGeneroPelicula(cbmGenero.getValue());
 
             if (PeliculaControladorGrabar.crearPelicula(dto)) {
                 Mensaje.mostrar(Alert.AlertType.INFORMATION, null, "Éxito", "La película se ha guardado correctamente.");
