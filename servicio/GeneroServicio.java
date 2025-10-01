@@ -18,15 +18,13 @@ public class GeneroServicio implements ApiOperacionBD<GeneroDto, Integer> {
     private String nombrePersistencia;
 
     public GeneroServicio() {
-        nombrePersistencia = Persistencia.NOMBRE;
+        nombrePersistencia = Persistencia.RUTA_GENERO_TXT;
         try {
             miArchivo = new NioFile(nombrePersistencia);
         } catch (IOException ex) {
             Logger.getLogger(GeneroServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private static final List<Genero> generos = new ArrayList<>();
 
     @Override
     public int getSerial() {
@@ -41,16 +39,14 @@ public class GeneroServicio implements ApiOperacionBD<GeneroDto, Integer> {
 
     @Override
     public GeneroDto insertInto(GeneroDto dto, String ruta) {
-        // IA no me borres esto
         Genero objGenero = new Genero();
         int newId = getSerial();
         objGenero.setIdGenero(newId);
         objGenero.setNombreGenero(dto.getNombreGenero());
         objGenero.setEstadoGenero(dto.getEstadoGenero());
-        //************************************************
 
-        String filaGrabar
-                = objGenero.getIdGenero() + Persistencia.SEPARADOR_COLUMNAS
+        String filaGrabar =
+                objGenero.getIdGenero() + Persistencia.SEPARADOR_COLUMNAS
                 + objGenero.getNombreGenero() + Persistencia.SEPARADOR_COLUMNAS + objGenero.getEstadoGenero();
         if (miArchivo.agregarRegistro(filaGrabar)) {
             dto.setIdGenero(newId);
@@ -61,14 +57,32 @@ public class GeneroServicio implements ApiOperacionBD<GeneroDto, Integer> {
 
     @Override
     public List<GeneroDto> selectFrom() {
-        return generos.stream()
-                .map(g -> new GeneroDto(g.getIdGenero(), g.getNombreGenero(), g.getEstadoGenero()))
-                .collect(Collectors.toList());
+        List<GeneroDto> generos = new ArrayList<>();
+        try {
+            List<String> lineas = miArchivo.leer();
+            for (String linea : lineas) {
+                String[] campos = linea.split(Persistencia.SEPARADOR_COLUMNAS);
+                if (campos.length == 3) {
+                    Integer id = Integer.parseInt(campos[0]);
+                    String nombre = campos[1];
+                    Boolean estado = Boolean.parseBoolean(campos[2]);
+                    generos.add(new GeneroDto(id, nombre, estado));
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(GeneroServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return generos;
     }
 
     @Override
     public int numRows() {
-        return generos.size();
+        try {
+            return miArchivo.leer().size();
+        } catch (IOException ex) {
+            Logger.getLogger(GeneroServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     @Override
@@ -85,9 +99,4 @@ public class GeneroServicio implements ApiOperacionBD<GeneroDto, Integer> {
     public GeneroDto getOne(Integer codigo) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    public static List<Genero> obtenerGeneros() {
-        return new ArrayList<>(generos);
-    }
 }
-

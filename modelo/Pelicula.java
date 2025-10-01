@@ -5,15 +5,19 @@ public class Pelicula {
     private String nombrePelicula;
     private String protagonistaPelicula;
     private Genero generoPelicula;
+    private Double presupuestoPelicula;
+    private Boolean mayoriaEdad;
 
     public Pelicula() {
     }
 
-    public Pelicula(Integer codigoPelicula, String nombrePelicula, String protagonistaPelicula, Genero generoPelicula) {
+    public Pelicula(Integer codigoPelicula, String nombrePelicula, String protagonistaPelicula, Genero generoPelicula, Double presupuestoPelicula, Boolean mayoriaEdad) {
         this.codigoPelicula = codigoPelicula;
         this.nombrePelicula = nombrePelicula;
         this.protagonistaPelicula = protagonistaPelicula;
         this.generoPelicula = generoPelicula;
+        this.presupuestoPelicula = presupuestoPelicula;
+        this.mayoriaEdad = mayoriaEdad;
     }
 
     public Integer getCodigoPelicula() {
@@ -48,6 +52,22 @@ public class Pelicula {
         this.generoPelicula = generoPelicula;
     }
 
+    public Double getPresupuestoPelicula() {
+        return presupuestoPelicula;
+    }
+
+    public void setPresupuestoPelicula(Double presupuestoPelicula) {
+        this.presupuestoPelicula = presupuestoPelicula;
+    }
+
+    public Boolean getMayoriaEdad() {
+        return mayoriaEdad;
+    }
+
+    public void setMayoriaEdad(Boolean mayoriaEdad) {
+        this.mayoriaEdad = mayoriaEdad;
+    }
+
     @Override
     public String toString() {
         return "Pelicula{" +
@@ -55,6 +75,8 @@ public class Pelicula {
                 ", nombrePelicula='" + nombrePelicula + '\'' +
                 ", protagonistaPelicula='" + protagonistaPelicula + '\'' +
                 ", generoPelicula=" + generoPelicula +
+                ", presupuestoPelicula=" + presupuestoPelicula +
+                ", mayoriaEdad=" + mayoriaEdad +
                 '}';
     }
 }
