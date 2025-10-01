@@ -4,11 +4,8 @@ import com.poo.persistence.NioFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import org.unimag.api.ApiOperacionBD;
 import org.unimag.dto.GeneroDto;
 import org.unimag.dto.PeliculaDto;
@@ -23,7 +20,7 @@ public class PeliculaServicio implements ApiOperacionBD<PeliculaDto, Integer> {
     private GeneroServicio generoServicio;
 
     public PeliculaServicio() {
-        nombrePersistencia = Persistencia.RUTA_PELICULA_TXT;
+        nombrePersistencia = Persistencia.NOMBRE_PELICULA;
         generoServicio = new GeneroServicio();
         try {
             miArchivo = new NioFile(nombrePersistencia);
@@ -72,11 +69,7 @@ public class PeliculaServicio implements ApiOperacionBD<PeliculaDto, Integer> {
     @Override
     public List<PeliculaDto> selectFrom() {
         List<PeliculaDto> peliculas = new ArrayList<>();
-
-        // Load all genres into a map for efficient lookup
-        Map<Integer, Genero> generoMap = generoServicio.selectFrom().stream()
-            .map(g -> new Genero(g.getIdGenero(), g.getNombreGenero(), g.getEstadoGenero()))
-            .collect(Collectors.toMap(Genero::getIdGenero, Function.identity()));
+        List<GeneroDto> generos = generoServicio.selectFrom();
 
         try {
             List<String> lineas = miArchivo.leer();
@@ -90,7 +83,14 @@ public class PeliculaServicio implements ApiOperacionBD<PeliculaDto, Integer> {
                     Integer idGenero = Integer.parseInt(campos[4]);
                     Boolean mayoriaEdad = Boolean.parseBoolean(campos[5]);
 
-                    Genero genero = generoMap.get(idGenero);
+                    Genero genero = null;
+                    for (GeneroDto g : generos) {
+                        if (g.getIdGenero().equals(idGenero)) {
+                            genero = new Genero(g.getIdGenero(), g.getNombreGenero(), g.getEstadoGenero());
+                            break;
+                        }
+                    }
+
                     if (genero == null) {
                         Logger.getLogger(PeliculaServicio.class.getName()).log(Level.WARNING, "No se encontró el género con ID: " + idGenero);
                         continue; // Skip this movie if genre not found
