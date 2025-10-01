@@ -59,7 +59,7 @@ public class GeneroServicio implements ApiOperacionBD<GeneroDto, Integer> {
     public List<GeneroDto> selectFrom() {
         List<GeneroDto> generos = new ArrayList<>();
         try {
-            List<String> lineas = miArchivo.leer();
+            List<String> lineas = miArchivo.obtenerDatos();
             for (String linea : lineas) {
                 String[] campos = linea.split(Persistencia.SEPARADOR_COLUMNAS);
                 if (campos.length == 3) {
@@ -78,7 +78,7 @@ public class GeneroServicio implements ApiOperacionBD<GeneroDto, Integer> {
     @Override
     public int numRows() {
         try {
-            return miArchivo.leer().size();
+            return miArchivo.cantidadFilas();
         } catch (IOException ex) {
             Logger.getLogger(GeneroServicio.class.getName()).log(Level.SEVERE, null, ex);
         }

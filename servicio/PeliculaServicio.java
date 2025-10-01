@@ -72,7 +72,7 @@ public class PeliculaServicio implements ApiOperacionBD<PeliculaDto, Integer> {
         List<GeneroDto> generos = generoServicio.selectFrom();
 
         try {
-            List<String> lineas = miArchivo.leer();
+            List<String> lineas = miArchivo.obtenerDatos();
             for (String linea : lineas) {
                 String[] campos = linea.split(Persistencia.SEPARADOR_COLUMNAS);
                 if (campos.length == 6) {
@@ -108,7 +108,7 @@ public class PeliculaServicio implements ApiOperacionBD<PeliculaDto, Integer> {
     @Override
     public int numRows() {
         try {
-            return miArchivo.leer().size();
+            return miArchivo.cantidadFilas();
         } catch (IOException ex) {
             Logger.getLogger(PeliculaServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
