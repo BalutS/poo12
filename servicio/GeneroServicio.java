@@ -18,7 +18,7 @@ public class GeneroServicio implements ApiOperacionBD<GeneroDto, Integer> {
     private String nombrePersistencia;
 
     public GeneroServicio() {
-        nombrePersistencia = Persistencia.RUTA_GENERO_TXT;
+        nombrePersistencia = Persistencia.NOMBRE_GENERO;
         try {
             miArchivo = new NioFile(nombrePersistencia);
         } catch (IOException ex) {
