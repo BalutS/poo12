@@ -55,7 +55,7 @@ public class PeliculaServicio implements ApiOperacionBD<PeliculaDto, Integer> {
                 objPelicula.getCodigoPelicula() + Persistencia.SEPARADOR_COLUMNAS
                 + objPelicula.getNombrePelicula() + Persistencia.SEPARADOR_COLUMNAS
                 + objPelicula.getProtagonistaPelicula() + Persistencia.SEPARADOR_COLUMNAS
-                + objPelicula.getPresupuestoPelicula() + Persistencia.SEPARADOR_COLUMNAS
+                + String.format("%.0f", objPelicula.getPresupuestoPelicula()) + Persistencia.SEPARADOR_COLUMNAS
                 + objPelicula.getGeneroPelicula().getIdGenero() + Persistencia.SEPARADOR_COLUMNAS
                 + objPelicula.getMayoriaEdad();
 
